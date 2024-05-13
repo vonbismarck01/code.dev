@@ -39,7 +39,10 @@ return $mediaFinal;
 echo (media(4, 8, 10));
 
 
+
+
 ?>
+<h1>bismarck</h1>
     
 </body>
 </html>

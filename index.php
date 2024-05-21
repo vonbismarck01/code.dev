@@ -11,70 +11,88 @@
 <body>
 
 <?php
-
-if($_SERVER['REQUEST_METHOD']=="POST") {
-    $email= $_POST['campoEmail'];
-    $name= $_POST['campoNome'];
-    $senha= $_POST['campoSenha'];
-    $sobrenome= $_POST['campoSobrenome'];
-    $confirmarsenha= $_POST['confirmarSenha'];
-    
-    if(empty ($email) ){
-        $erroEmail= "Informe seu email";
-    }else{
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $erroEmail= "Digite um email valido";
-        }
-        else{
-            $erroEmail= "Nenhum";
-        }
-    }
-    if(empty ($name)){
-        $erroNome= "Informe seu nome";
-    }else{
-    }
-
-        if(!preg_match("/^[a-zA-Z-' ]*$/",$name)){
-          $erroNome= "Digite um nome valido";
-    }else{
-        $erroNome = "Nenhum";
-        }
-
-    if(empty($senha)  ){
-            $erroSenha= "Informe uma senha";
-    }else{
-        if(strlen ($senha) < 6 ){
-        $erroSenha= "digite sua senha maior de seis digitos";
+    if($_SERVER['REQUEST_METHOD']=="POST") {
+        $email= $_POST['campoEmail'];
+        $name= $_POST['campoNome'];
+        $senha= $_POST['campoSenha'];
+        $sobrenome= $_POST['campoSobrenome'];
+        $confirmarsenha= $_POST['confirmarSenha'];
+        
+        //VALIDAÇÃO DE EMAIL
+        if(empty ($email) ){
+            $erroEmail= "Informe seu email";
         }else{
-            $erroSenha="Nenhum";
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $erroEmail= "Digite um email valido";
+            }else{
+                $erroEmail= "Nenhum";
+            }
         }
-    }
-    if(empty($confirmarSenha)){
-        $erroConfirmarSenha= "Confirme sua senha";
-    }else{
-    
-        if($repitaSuaSenha != $senha){
-            $erroRepitaSenha ="As senhas precisam ser iguais";
-        }else{ 
-            $ErroRepitaSenha= "Nenhum";
-        }      
-        if($erroEmail=="Nehum" && $erroNome=="nenhum" && $erroSobrenome=="Nenhum" && $erroSenha== "Nenhum" && $erroConfirmarSenha=="nenhum" ) {
-            header('location: Onrigado.html');
-            
+
+        //VALIDAÇÃO DE NOME
+        if(empty ($name)){
+            $erroNome= "Informe seu nome";
+        }else{
+            if(!preg_match("/^[a-zA-Z-' ]*$/",$name)){
+                $erroNome= "Digite um nome valido";
+            }else{
+                $erroNome = "Nenhum";
+                }
+        }
+        //VALIDAÇÃO DE SOBRENOME
+        if(empty ($sobrenome)){
+            $erroSobrenome= "Informe seu sobrenome";
+        }else{
+            if(!preg_match("/^[a-zA-Z-' ]*$/",$sobrenome)){
+                $erroSobrenome= "Digite um sobrenome valido";
+            }else{
+                $erroSobrenome = "Nenhum";
+                }
         }
         
-    }   
-}
-       ?>
+
+        //VALIDAÇÃO DE SENHA
+        if(empty($senha)  ){
+                $erroSenha= "Informe uma senha";
+        }else{
+            if(strlen ($senha) < 6 ){
+            $erroSenha= "digite sua senha maior de seis digitos";
+            }else{
+                $erroSenha="Nenhum";
+            }
+        }
+        //VALIDAÇÃO DE CONFIRMAR SENHA
+        if(empty($confirmarSenha)){
+            $erroConfirmarSenha= "Confirme sua senha";
+        }else{
+        
+            if($repitaSuaSenha != $senha){
+                $erroRepitaSenha ="As senhas precisam ser iguais";
+            }else{ 
+                $ErroRepitaSenha= "Nenhum";
+            }      
+            
+            
+        }   
+
+        if($erroEmail=="Nehum" && $erroNome=="nenhum" && $erroSobrenome=="Nenhum" && $erroSenha== "Nenhum" && $erroConfirmarSenha=="nenhum" ) {
+            header('location: Obrigado.html');
+            
+        }
+    }
+?>
+
+
 <div class="container">
     <div class="row">
         <div class="col">
-            <form action="" method="post">
+            <form  method="post" novalidate>
                 <h1>Faça o seu cadastro</h1>
                 <br>
                 <label for="exampleInputEmail1" class="form-label">Endereço de email <i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Informe seu email"></i> </label>
                 <br>
-                <input type="email" name="campoEmail" class="form-control is-invalid  <?php if(isset($erroEmail)){if($erroEmail != "Nenhum"){;echo $erroEmail;}}?> "id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="email" name="campoEmail" class="form-control <?php if(isset($erroEmail)){if($erroEmail != "Nenhum"){;echo "is-invalid";}}?>" id="campoEmail">
+                <!-- <input type="email" name="campoEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
                 <div class="invalid-feedback">
                     <br>
                     <?php
@@ -84,11 +102,11 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                       }
                       }
                     ?>
-                   </div>
+                </div>
                 <br>
                 <label for="exampleInputEmail1" class="form-label">Nome<i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Digitre seu primeiro nome"></i> </label>
-                <input type="nome" name="campoNome" class="form-control  is-invalid  <?php if(isset($erroNome)){if($erroNome != "Nenhum"){;echo $erroNome;}}
-               ?>" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="nome" name="campoNome" class="form-control <?php if(isset($erroNome)){if($erroNome != "Nenhum"){;echo "is-invalid";}}?>" id="campoNome">
+                <!-- <input type="nome" name="campoNome" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp">-->
                 <div class="invalid-feedback">
                <br>
                 <?php
@@ -101,10 +119,9 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                  </div>
                 <br>
                 <label for="exampleInputPassword1" class="form-label">Sobrenome <i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Digite o seu segundo nome"></i> </label>
-                <input type="text" name="campoSobrenome" class="form-control  is-invalid  <?phpif(isset($erroSobrenome)){if($erroSobrenome != "Nenhum"){;echo $erroSobrenome; } }?>
-                 </div>" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="text" name="campoSobrenome" class="form-control  <?php if(isset($erroSobrenome)){if($erroSobrenome != "Nenhum"){;echo "is-invalid";} }?>" id="exampleInputEmail1" aria-describedby="emailHelp">
                 <div class="invalid-feedback">
-                Please choose a username.
+            
                 <?php
                       if(isset($erroSobrenome)){
                         if($erroSobrenome != "Nenhum"){;
@@ -115,10 +132,12 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                  </div>
               
                 <br>
+
+                <!-- CAMPO SENHA DO FORMULARIO -->
                 <label for="exampleInputPassword1" class="form-label"> Senha <i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Sua senha"></i>  </label>
-                <input type="password" name="campoSenha" class="form-control   <?php if(isset($erroSenha)){if($erroSenha != "Nenhum"){;echo $erroSenha; }}?>" id="exampleInputPassword1"> 
+                <input type="password" name="campoSenha" class="form-control   <?php if(isset($erroSenha)){if($erroSenha != "Nenhum"){;echo "is-invalid"; }}?>" id="exampleInputPassword1"> 
                 <div class="invalid-feedback">
-                  Please choose a username.
+                  
                   <?php
                       if(isset($erroSenha)){
                         if($erroSenha != "Nenhum"){;
@@ -129,7 +148,7 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
                 </div>
                 
                 <label for="exampleInputPassword1" class="form-label">Confirmar senha <i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Repita sua senha"></i> </label>
-                <input type="password" name="confirmarSenha" class="form-control is-invalid " id="exampleInputPassword1"> 
+                <input type="password" name="confirmarSenha" class="form-control " id="exampleInputPassword1"> 
                 <div class="invalid-feedback">
                   Please choose a username.
                   <?php
